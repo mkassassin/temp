@@ -1,0 +1,55 @@
+<div class="ecnValidation-Section">
+	<div class="sections-split">
+		<div class="textarea-section">
+			<textarea [ngClass]="{'activeInput': lastActiveInput === 'testArea'}" (keydown)="restrictTextareaInput($event)" [(ngModel)]="inputData" (input)="convertToJSON($event)" placeholder="Paste you ECN data here..."></textarea>
+		</div>
+		<div class="fileUpload-section">
+			<div class="fileUpload" [ngClass]="{'activeInput': lastActiveInput === 'fileInput'}"  alphaDragDropFileUpload (click)="fileField.click()" (fileDropped)="upload($event)">
+				<span *ngIf="fileName !== '' && lastActiveInput === 'fileInput'" class="fileUpload-note file-added"> Uploaded file : {{fileName}} </span>
+				<span  *ngIf="fileName === '' || lastActiveInput !== 'fileInput'" class="fileUpload-note"> Choose a excel file or drag here </span>
+				<input type="file" name="avatars" accept=".xls, .XLS, .xlsx, .XLSX, .csv, .CSV" #fileField (change)="upload($any($event).target.files)" hidden />
+			</div>
+		</div>
+		<div class="table-section">
+			<table >
+				<thead>
+					<tr>
+						<th>S.No</th>
+						<ng-container *ngIf="tableData.length === 0">
+							<th>ECN</th>
+							<th>Company</th>
+						</ng-container>
+						<ng-container *ngIf="tableData.length > 0">
+							<ng-container *ngFor="let header of getTableKeys()">
+								<th> {{header}} </th>
+							</ng-container>
+						</ng-container>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngIf="tableData.length > 0; else elseTbodyTemplate">
+						<tr *ngFor="let data of tableData; let i=index">
+							<td>{{i + 1}}</td>
+							<ng-container *ngFor="let headerKey of getTableKeys()">
+								<td> {{ data[headerKey] }} </td>
+							</ng-container>
+						</tr>
+					</ng-container>
+					<ng-template #elseTbodyTemplate>
+						<tr>
+							<td colspan="3" style="text-align: center;"> No Records</td>
+						</tr>
+					</ng-template>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="action-section">
+		<div class="action-group">
+			<button type="button" class="submit-btn">
+				Submit
+			</button>
+		</div>
+	</div>
+</div>
