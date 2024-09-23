@@ -1,0 +1,24 @@
+<div class="tabsSection">
+	<div class="tabs">
+		<div class="tab" *ngFor="let tab of tabs; let i = index" [ngClass]="{'completed': i < activeTab, 'active': i === activeTab}" (click)="selectTab(i)">
+		  <span class="tabTitle">{{ tab }}</span>
+		</div>
+	 </div>
+	 <div class="tab-content">
+		<ng-container *ngIf="activeTab === 0">
+			<p>{{ activeTabContent }}</p>
+		</ng-container>
+		<ng-container *ngIf="activeTab === 1">
+			<alpha-data-table></alpha-data-table>
+		</ng-container>
+		<ng-container *ngIf="activeTab === 2">
+			<p>{{ activeTabContent }}</p>
+		</ng-container>
+		<ng-container *ngIf="activeTab === 3">
+			<p>{{ activeTabContent }}</p>
+		</ng-container>
+		<ng-container *ngIf="activeTab === 4">
+			<p>{{ activeTabContent }}</p>
+		</ng-container>
+	 </div>
+</div>
